@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>leaflet-imageoverlay-gl</title>
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css" />
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js"></script>
+  <script src="leaflet-imageoverlay-gl.js"></script>
+  <style>
+    #map {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+    }
+
+    #tool {
+      position: absolute;
+      bottom: 5px;
+      left: 5px;
+      width: auto;
+      height: auto;
+      z-index: 2000;
+      background: rgba(0, 0, 0, 0.75);
+      padding: 10px;
+      border-radius: 5px;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+  <div id="tool">
+    <b>Opacity</b><br/>
+    <input type="range" id="opacity" min="0" max="100" value="100" />
+    <br/>
+    <b>Control Points</b>
+    <br/>
+    <button style="width:100%" id="alert">show</button>
+  </div>
+  <script>
+    var map = L.map("map", {
+      maxZoom: 20,
+      maxNativeZoom: 18
+    });
+    map.zoomControl.setPosition("bottomright");
+
+    L.tileLayer("https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg", {
+      attribution: "<a href='http://maps.gsi.go.jp/development/ichiran.html'>地理院タイル</a>"
+    }).addTo(map);
+
+    var groundControlPoints = [
+      [0, 0, 139.6207165718079, 35.6174827968442],
+      [1, 0, 139.62956786155704, 35.61982018328692],
+      [1, 1, 139.63157415390017, 35.61479646238599],
+      [0, 1, 139.62289452552798, 35.61238915096208]
+    ];
+
+    var overlay = L.imageOverlay.gl("futakotamagawa.jpg", groundControlPoints, {
+      interactive: true,
+      attribution: "<a href='https://commons.wikimedia.org/wiki/File:%E4%BA%8C%E5%AD%90%E7%8E%89%E5%B7%9D%E5%B0%8F%E5%AD%A6%E6%A0%A1%E4%BB%98%E8%BF%91%E7%A9%BA%E6%92%AE2.jpg'>二子玉川小学校付近空撮2.jpg</a> by 二子玉川商店街振興組合"
+    }).addTo(map);
+
+    $("#opacity").on("input", function() {
+      overlay.setOpacity($(this).val() / 100);
+    }).trigger("input");
+
+    $("#alert").on("click", function() {
+      alert(JSON.stringify(overlay._groundControlPoints));
+    });
+
+    map.fitBounds(overlay.getBounds());
+  </script>
+</body>
+
+</html>

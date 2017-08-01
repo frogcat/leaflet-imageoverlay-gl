@@ -1,0 +1,22 @@
+{
+  "name": "leaflet-imageoverlay-gl",
+  "version": "0.0.1",
+  "description": "A leaflet plugin to load and display single image with four or more ground control points",
+  "main": "leaflet-imageoverlay-gl.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frogcat/leaflet-imageoverlay-gl.git"
+  },
+  "keywords": [
+    "leaflet"
+  ],
+  "author": "frogcat",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/frogcat/leaflet-imageoverlay-gl/issues"
+  },
+  "homepage": "https://github.com/frogcat/leaflet-imageoverlay-gl#readme"
+}
